@@ -16,6 +16,11 @@
                 {% endif %}
             </h6>
             <h6 class="text-right">
+                {% if not ticket.displayOnKanban %}
+                    not part of current kanban <i class="fa-solid fa-circle-xmark" style="color: #bd4949"></i>
+                {% endif %}
+            </h6>
+            <h6 class="text-right">
                 Assignee:
                 {% if ticket.assignee is not null %}
                 {{ ticket.assignee.email }}

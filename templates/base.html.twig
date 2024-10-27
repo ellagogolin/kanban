@@ -18,7 +18,7 @@
     <body class="bg-dark">
         <!-- Navbar -->
         <nav class="navbar navbar-dark bg-dark">
-            <a class="navbar-brand">
+            <a class="navbar-brand" href="{{ path('kanban_index') }}">
                 KANELLA
                 <i class="fa-solid fa-person-chalkboard"></i>
                 <p class="brand">
@@ -28,12 +28,12 @@
             {% if app.user is not null %}
                 <span class="navbar-text">
                     Hello
-                  {{ app.user.email }}! You are logged in successfully.
+                  {{ app.user.email }}!
                 </span>
                 <div align="center">
                     <a href="{{ path('backlog_addTicket') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid fa-plus" ></i> TICKET</a>
                     <a href="{{ path('backlog_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid fa-list-check" ></i> BACKLOG</a>
-                    <a href="/" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-regular fa-pen-to-square"></i> KANBAN</a>
+                    <a href="{{ path('kanban_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-regular fa-pen-to-square"></i> KANBAN</a>
                     {% if 'ROLE_ADMIN' in app.user.roles %}
                         <a href="{{ path('app_feedback_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid" ></i>Feedback</a>
                     {% endif %}
