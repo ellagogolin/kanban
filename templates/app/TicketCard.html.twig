@@ -1,0 +1,28 @@
+<a href="{{ path('backlog_getTicket', { ticket: ticket.id }) }}" style="text-decoration:none;">
+    <div class="card text-white border border-ligh bg-dark mb-3">
+        <div class="card-header text-right">{{ ticket.id }}</div>
+        <div class="card-body border-top border-ligh">
+            <h5 class="card-title">{{ ticket.title }}</h5>
+            <h6 class="text-right">
+                Priority:
+                {% if ticket.priority == 0 %}
+                    <i class="fa-solid fa-circle" style="color: #F5F5F5"></i>
+                {% elseif ticket.priority == 1 %}
+                    <i class="fa-solid fa-circle" style="color: #39ad39"></i>
+                {% elseif ticket.priority == 2 %}
+                    <i class="fa-solid fa-circle" style="color: #f6cf0a"></i>
+                {% elseif ticket.priority == 3 %}
+                    <i class="fa-solid fa-circle" style="color: #bd4949"></i>
+                {% endif %}
+            </h6>
+            <h6 class="text-right">
+                Assignee:
+                {% if ticket.assignee is not null %}
+                {{ ticket.assignee.email }}
+                {% else %}
+                <span style="color: #bd4949">not assigned</span>
+                {% endif %}
+            </h6>
+        </div>
+    </div>
+</a>

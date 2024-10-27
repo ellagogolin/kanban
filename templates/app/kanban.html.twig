@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div align="center" style="max-height: 300px" class="mb-3">
+        {{ render_chart(chart) }}
+    </div>
+    <div align="right">
+        <form method="get">
+            <label>
+                <select name="assignee" onchange="this.form.submit()">
+                    <option value=""></option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.email }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </form>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col border border-danger rounded" >
+                <h3 class="text-light text-center">Ready</h3>
+                {% for ticket in ticketsByStatus['READY'] %}
+                    {% include 'app/TicketCard.html.twig' with { ticket: ticket } %}
+                {% endfor %}
+            </div>
+            <div class="col border border-warning rounded ml-4 mr-4">
+                <h3 class="text-light text-center">In Progress</h3>
+                {% for ticket in ticketsByStatus['IN_PROGRESS'] %}
+                    {% include 'app/TicketCard.html.twig' with { ticket: ticket } %}
+                {% endfor %}
+            </div>
+            <div class="col border border-success rounded">
+                <h3 class="text-light text-center">Done</h3>
+                {% for ticket in ticketsByStatus['DONE'] %}
+                    {% include 'app/TicketCard.html.twig' with { ticket: ticket } %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div align="center">
+        {{ form_start(form) }}
+        <div contenteditable="true" class="input-group mt-5 mx-3" style="width: 10%; color: #F5F5F5">
+            {{ form_row(form.message) }}
+        </div>
+        <button class="btn btn-success" type="submit"><i class="fa-solid fa-paper-plane" style="font-size: medium"></i> Send Feedback</a></button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
