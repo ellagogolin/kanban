@@ -29,7 +29,7 @@ final class UserFixture extends Fixture
             $user = new User();
             $user->setEmail(sprintf('user-%s@example.com', $i));
             $user->setPassword($this->userPasswordHasher->hashPassword($user, 'password'));
-            $admin->setRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_USER']);
             $this->setReference(sprintf('user-%s', $i), $user);
             $manager->persist($user);
         }
