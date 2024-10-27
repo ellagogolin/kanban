@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div align="right">
+        <form method="get">
+            <label>
+                <select name="assignee" onchange="this.form.submit()">
+                    <option value=""></option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.email }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </form>
+    </div>
+    <div class="container">
+        {% for ticket in tickets %}
+            {% include 'app/TicketCard.html.twig' with { ticket: ticket } %}
+        {% endfor %}
+    </div>
+{% endblock %}

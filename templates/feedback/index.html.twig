@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        {% for feedbacks in feedbacks%}
+            <div class="card text-white border border-ligh bg-dark ml-auto mr-auto mb-3 mt-3" style="max-width: 90rem;">
+                <div class="card-header text-right">{{ feedbacks.id }}</div>
+                <div class="card-body border-top border-ligh">
+                    <p class="card-text">{{ feedbacks.message }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="card text-white border border-ligh bg-dark ml-auto mr-auto mb-3" style="max-width: 90rem;">
+        <div class="card-header text-right">{{ ticket.id }}</div>
+        <div class="card-body border-top border-light">
+            {{ form_start(form) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+            <div align="right">
+                {{ form_row(form.displayOnKanban) }}
+                {{ form_row(form.assignee) }}
+                <label>
+                    <select name="{{ field_name(form.status) }}" class="fa-solid fa-circle btn btn-secondary form-control" style="max-width: 180px">
+                        {% for label, value in field_choices(form.status) %}
+                            <option value="{{ value }}" {% if value == field_value(form.status) %} selected="selected" {% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>
+                    <select name="{{ field_name(form.priority) }}" class="fa-solid fa-circle btn btn-secondary form-control" style="max-width: 140px">
+                        {% for label, value in field_choices(form.priority) %}
+                            <option value="{{ value }}" {% if value == field_value(form.priority) %} selected="selected" {% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <button class="btn btn-secondary mt-2 mb-2" type="submit" name="ticket_edit"><i class="fa-solid fa-marker" style="font-size: medium"></i> <i class="fa-regular fa-floppy-disk"></i></button>
+                {{ form_end(form) }}
+                {{ form_start(deleteForm) }}
+                <button class="btn btn-secondary" type="submit" name="ticket_delete"><i class="fa-solid fa-trash" style="font-size: medium; color: #bd4949"></i></button>
+                {{ form_end(deleteForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

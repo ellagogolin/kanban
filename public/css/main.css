@@ -1,0 +1,22 @@
+.fa-person-chalkboard {
+    color: #2f972f;
+
+}
+.navbar-brand {
+    color: #2f972f;
+    margin: 0px;
+    padding: 0px;
+}
+.navbar {
+    height: 70px; /* Setzt die Höhe der Navbar auf 50px */
+
+}
+.brand {
+    color: #2f972f;
+    font-size: 8px;
+    padding-left: 3px;
+}
+
+form label {
+    margin-right: 16px;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}KANELLA{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <!-- Bootstrap -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Fontawesome -->
+        <script src="https://kit.fontawesome.com/aaf84dc8f0.js" crossorigin="anonymous"></script>
+        <!-- eigenes CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+        {% block importmap %}
+            {{ importmap('app') }}
+        {% endblock %}
+    </head>
+    <body class="bg-dark">
+        <!-- Navbar -->
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand">
+                KANELLA
+                <i class="fa-solid fa-person-chalkboard"></i>
+                <p class="brand">
+                    Kanban-Board by Ella
+                </p>
+            </a>
+            {% if app.user is not null %}
+                <span class="navbar-text">
+                    Hello
+                  {{ app.user.email }}! You are logged in successfully.
+                </span>
+                <div align="center">
+                    <a href="{{ path('backlog_addTicket') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid fa-plus" ></i> TICKET</a>
+                    <a href="{{ path('backlog_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid fa-list-check" ></i> BACKLOG</a>
+                    <a href="/" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-regular fa-pen-to-square"></i> KANBAN</a>
+                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <a href="{{ path('app_feedback_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid" ></i>Feedback</a>
+                    {% endif %}
+                    <a href="{{ path('app_logout') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid fa-arrow-right-from-bracket"></i> LOGOUT</a>
+                </div>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="text-light" style="text-decoration:none;">Login</a>
+                <a href="{{ path('app_register') }}" class="text-light" style="text-decoration:none;">Register</a>
+            {% endif %}
+        </nav>
+
+        {% block body %}
+        {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    </body>
+</html>
