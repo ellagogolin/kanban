@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        {% for user in users %}
+        <a href="{{ path('userManagement_editUser', { user: user.id }) }}" style="text-decoration:none;">
+        <div class="card text-white border border-ligh bg-dark ml-auto mr-auto mb-3 mt-3" style="max-width: 90rem;">
+                <div class="card-header text-right">{{ user.id }}</div>
+                <div class="card-body border-top border-ligh">
+                    <p class="card-text">{{ user.email }}</p>
+                    <p class="card-text">Rolle: {{ ('ROLE_ADMIN' in user.roles) ? 'Admin' : 'Benutzer' }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

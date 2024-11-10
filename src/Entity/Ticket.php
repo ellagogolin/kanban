@@ -33,11 +33,12 @@ class Ticket
     #[ORM\Column]
     public ?bool $displayOnKanban = false;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'authoredTickets')]
+    #[ORM\JoinColumn(nullable: true)]
     public ?User $author = null;
 
     #[ORM\ManyToOne(inversedBy: 'assignedTickets')]
+    #[ORM\JoinColumn(nullable: true)]
     public ?User $assignee = null;
 
     #[ORM\Column(length: 15, enumType: TicketStatus::class)]

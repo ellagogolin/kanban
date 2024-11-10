@@ -39,15 +39,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[OneToMany(targetEntity: Ticket::class, mappedBy: 'assignee')]
     private Collection $assignedTickets;
-    // ...
+
+    #[OneToMany(targetEntity: Ticket::class, mappedBy: 'author')]
+    private Collection $authoredTickets;
+
+    #[OneToMany(targetEntity: Feedback::class, mappedBy: 'user')]
+    private Collection $feedback;
 
     public function __construct() {
         $this->assignedTickets = new ArrayCollection();
+        $this->authoredTickets = new ArrayCollection();
+        $this->feedback = new ArrayCollection();
     }
 
     public function getAssignedTickets(): Collection
     {
         return $this->assignedTickets;
+    }
+
+    public function getAuthoredTickets(): Collection
+    {
+        return $this->authoredTickets;
+    }
+
+    public function setAuthoredTickets(Collection $authoredTickets): void
+    {
+        $this->authoredTickets = $authoredTickets;
+    }
+
+    public function getFeedback(): Collection
+    {
+        return $this->feedback;
+    }
+
+    public function setFeedback(Collection $feedback): void
+    {
+        $this->feedback = $feedback;
     }
 
     public function getId(): ?int

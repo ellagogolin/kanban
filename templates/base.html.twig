@@ -35,7 +35,8 @@
                     <a href="{{ path('backlog_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid fa-list-check" ></i> BACKLOG</a>
                     <a href="{{ path('kanban_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-regular fa-pen-to-square"></i> KANBAN</a>
                     {% if 'ROLE_ADMIN' in app.user.roles %}
-                        <a href="{{ path('app_feedback_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid" ></i>Feedback</a>
+                        <a href="{{ path('app_feedback_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid" ></i>FEEDBACK</a>
+                        <a href="{{ path('userManagement_index') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid fa-user-pen" ></i> USER MANAGEMENT</a>
                     {% endif %}
                     <a href="{{ path('app_logout') }}" class="badge badge-success" style="font-weight: 400; font-size: medium"><i class="fa-solid fa-arrow-right-from-bracket"></i> LOGOUT</a>
                 </div>

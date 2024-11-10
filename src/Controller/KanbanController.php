@@ -8,16 +8,14 @@ use App\Entity\TicketLog;
 use App\Entity\User;
 use App\Enum\TicketStatus;
 use App\Form\FeedbackType;
-use Doctrine\DBAL\Result;
-use Doctrine\ORM\Query;
+use DateInterval;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
@@ -61,20 +59,45 @@ class KanbanController extends AbstractController
         }
 
         $users = $this->entityManager->getRepository(User::class)->findAll();
-
         $burndownResult = $this->entityManager->getRepository(TicketLog::class)->getBurndownResult();
+        $date = new \DateTimeImmutable();
+        $weekNumber = $date->format("W");
+        $sprintInterval = DateInterval::createFromDateString(($weekNumber %2 === 0 ? 6 : 13)-date('w').' days');
+        $end = new DateTime();
+        $end->add($sprintInterval);
+        $startInterval = DateInterval::createFromDateString('14 days');
+        $start = clone $end;
+        $start->sub($startInterval);
+
+        if (count($burndownResult) > 0) {
+            $lastItem = end($burndownResult);
+
+
+            if ($lastItem['date']->format('Y-m-d') !== $date->format('Y-m-d')) {
+                $burndownResult[] = ['date' => $date, 'runningTotal' => $lastItem['runningTotal']];
+            }
+        }
+
+        $runningTotalOnStart = 0;
+
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart->setData([
-            'labels' => array_map(static function ($item) {
-                return date_format($item['date'], 'd.m.Y');
-            }, $burndownResult),
             'datasets' => [
                 [
-                    'label' => 'Burndown',
+                    'label' => 'Tickets',
                     'borderColor' => '#2f972f',
                     'data' => array_map(static function ($item) {
-                        return $item['runningTotal'];
+                        return ['x' => $item['date']->format('Y-m-d'), 'y' => $item['runningTotal']];
                     }, $burndownResult),
+                ],
+                [
+                    'label' => 'Burndown',
+                    'borderColor' => '#ffffff',
+                    'data' => [
+                        ['x' => '2024-10-31', 'y' => 7],
+                        ['x' => $end->format('Y-m-d'), 'y' => 0],
+                    ],
+                    'labels' => [$start->format('Y-m-d'), $end->format('Y-m-d')],
                 ],
             ],
         ]);
@@ -96,7 +119,10 @@ class KanbanController extends AbstractController
             'form' => $form,
             'ticketsByStatus' => $ticketsByStatus,
             'users' => $users,
-            'chart' => $chart
+            'chart' => $chart,
+            'runningTotalOnStart' => $runningTotalOnStart,
+            'start' => $start,
+            'end' => $end,
         ]);
     }
 }

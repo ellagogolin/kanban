@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="card text-white border border-ligh bg-dark ml-auto mr-auto mb-3" style="max-width: 90rem;">
+        <div class="card-header text-right">{{ user.id }}</div>
+        <div class="card-body border-top border-light">
+            {{ form_start(form) }}
+            {{ form_row(form.email) }}
+            <div align="right">
+                {{ form_row(form.isAdmin) }}
+                <button class="btn btn-secondary mt-2 mb-2" type="submit" name="ticket_edit"><i class="fa-solid fa-marker" style="font-size: medium"></i> <i class="fa-regular fa-floppy-disk"></i></button>
+                {{ form_end(form) }}
+                {{ form_start(deleteForm) }}
+                <button class="btn btn-secondary" type="submit" name="ticket_delete"><i class="fa-solid fa-trash" style="font-size: medium; color: #bd4949"></i></button>
+                {{ form_end(deleteForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
